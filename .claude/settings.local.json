@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(Get-Content \"C:\\\\Users\\\\Abraham\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--Users-Abraham-Documents-Gloria-Venezuela-pagina\\\\4c60b3b2-4861-43cb-bf9b-1efa0ade21a4\\\\tasks\\\\bcni27zs6.output\" -Wait -Tail 5)",
+      "Bash(Select-String -Pattern \"added|error|warn|npm warn\" --AllMatches)"
+    ]
+  }
+}
