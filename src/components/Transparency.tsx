@@ -5,10 +5,6 @@ import { campaign } from "@/data/campaign";
 export default function Transparency() {
   const { lang } = useLang();
   const t = campaign.i18n[lang];
-  const transparencyText = lang === "en"
-    ? "We will publish progress updates, production photos, deliveries and counter updates so every donor can see the impact of their contribution."
-    : campaign.texts.transparencia;
-
   const uses = [
     { icon: "🔩", label: t.transUse1Label, desc: t.transUse1Desc },
     { icon: "🪑", label: t.transUse2Label, desc: t.transUse2Desc },
@@ -40,12 +36,6 @@ export default function Transparency() {
           ))}
         </div>
 
-        <div className="bg-gray-900 text-white rounded-2xl p-8 text-center">
-          <div className="text-3xl mb-4">📢</div>
-          <p className="text-lg leading-relaxed max-w-2xl mx-auto text-gray-200">
-            {transparencyText}
-          </p>
-        </div>
       </div>
     </section>
   );

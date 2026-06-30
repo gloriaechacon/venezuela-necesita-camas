@@ -1,9 +1,7 @@
 "use client";
-import { useState } from "react";
 import { useLang } from "@/context/LanguageContext";
 import { campaign } from "@/data/campaign";
 import type { GalleryCategory } from "@/data/campaign";
-import Lightbox from "./Lightbox";
 
 const galleryIcons: Record<GalleryCategory, string> = {
   produccion: "🔧",
@@ -13,29 +11,12 @@ const galleryIcons: Record<GalleryCategory, string> = {
   refugios:   "🏠",
 };
 
-const galleryBg: Record<GalleryCategory, string> = {
-  produccion: "bg-orange-900/30",
-  materiales: "bg-gray-700/30",
-  colchones:  "bg-blue-900/30",
-  entregas:   "bg-green-900/30",
-  refugios:   "bg-yellow-900/30",
-};
-
 export default function Footer() {
   const { lang } = useLang();
   const t = campaign.i18n[lang];
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const waMain = `https://wa.me/${campaign.contact.whatsapp.replace(/\D/g, "")}`;
-  const hasPhotos = campaign.gallery.some((g) => g.src);
   const hasPartners = campaign.partners.some((p) => p.logo || p.name !== "Por confirmar");
-
-  const realImages = campaign.gallery
-    .filter((g) => !!g.src)
-    .map((g) => ({
-      src: g.src!,
-      alt: lang === "en" && g.altEn ? g.altEn : g.alt,
-    }));
 
   const footerLinks: [string, string][] = [
     ["/#proceso",       t.footerLink1],
@@ -67,7 +48,7 @@ export default function Footer() {
                     // eslint-disable-next-line @next/next/no-img-element
                     <img src={p.logo} alt={p.name} className="h-6 object-contain" />
                   ) : (
-                    <span>🏢</span>
+                    <span>{galleryIcons["produccion"]}</span>
                   )}
                   {p.name}
                 </div>
@@ -76,64 +57,6 @@ export default function Footer() {
           </div>
         </div>
       )}
-
-      {/* ── Galería de avances ── */}
-      <div className="border-b border-white/10 py-8">
-        <div className="max-w-6xl mx-auto px-4">
-          <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest text-center mb-5">
-            {t.footerGalleryLabel}
-          </p>
-          <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
-            {campaign.gallery.map((item, i) => {
-              if (item.src) {
-                const realIdx = realImages.findIndex((r) => r.src === item.src);
-                const alt = lang === "en" && item.altEn ? item.altEn : item.alt;
-                return (
-                  <button
-                    key={i}
-                    type="button"
-                    onClick={() => setLightboxIndex(realIdx)}
-                    className={`aspect-square rounded-xl overflow-hidden border border-white/10 relative group cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-yellow`}
-                    aria-label={alt}
-                  >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={item.src}
-                      alt={alt}
-                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end justify-center pb-1.5 px-1">
-                      <span className="text-[9px] text-white text-center leading-tight font-medium drop-shadow">
-                        {alt}
-                      </span>
-                    </div>
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                      <span className="text-white text-2xl drop-shadow">🔍</span>
-                    </div>
-                  </button>
-                );
-              }
-
-              return (
-                <div
-                  key={i}
-                  className={`aspect-square rounded-xl flex flex-col items-center justify-center ${galleryBg[item.category]} border border-white/10`}
-                >
-                  <span className="text-2xl">{galleryIcons[item.category]}</span>
-                  <span className="text-[9px] text-gray-500 mt-1 text-center px-1 leading-tight">
-                    {lang === "en" && item.altEn ? item.altEn : item.alt}
-                  </span>
-                </div>
-              );
-            })}
-          </div>
-          {!hasPhotos && (
-            <p className="text-center text-xs text-gray-600 mt-3">
-              {t.footerGalleryPending}
-            </p>
-          )}
-        </div>
-      </div>
 
       {/* ── Footer principal ── */}
       <div className="py-10">
@@ -220,15 +143,6 @@ export default function Footer() {
           </div>
         </div>
       </div>
-
-      {lightboxIndex !== null && (
-        <Lightbox
-          images={realImages}
-          index={lightboxIndex}
-          onClose={() => setLightboxIndex(null)}
-          onNavigate={setLightboxIndex}
-        />
-      )}
     </footer>
   );
 }

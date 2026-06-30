@@ -28,12 +28,17 @@ export default function Hero() {
         </div>
 
         {/* Título principal */}
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-7">
+        <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight mb-3">
           {t.heroTitle}
         </h1>
 
-        {/* Subtítulo */}
-        <p className="text-gray-300 text-lg md:text-xl leading-relaxed mb-10 max-w-2xl mx-auto">
+        {/* Subtítulo emocional */}
+        <h2 className="text-xl md:text-2xl font-semibold text-gray-200 leading-snug mb-6">
+          {t.heroH2}
+        </h2>
+
+        {/* Descripción */}
+        <p className="text-gray-300 text-base md:text-lg leading-relaxed mb-10 max-w-2xl mx-auto">
           {t.heroSubtitle}
         </p>
 

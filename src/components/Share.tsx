@@ -18,11 +18,11 @@ export default function Share() {
   };
 
   return (
-    <section id="compartir" className="py-16 bg-white border-t border-gray-100">
+    <section id="compartir" className="py-16 bg-gray-950">
       <div className="max-w-xl mx-auto px-4 text-center">
         <div className="text-4xl mb-4">📣</div>
-        <h2 className="section-title">{t.shareTitle}</h2>
-        <p className="text-gray-500 mb-8">
+        <h2 className="text-3xl font-bold text-white mb-4 font-heading">{t.shareTitle}</h2>
+        <p className="text-gray-400 mb-8">
           {t.shareSubtitle}
         </p>
 
@@ -84,8 +84,8 @@ export default function Share() {
             onClick={copyLink}
             className={`inline-flex items-center gap-2 px-5 py-3 border-2 font-semibold rounded-lg transition-all ${
               copied
-                ? "border-green-500 bg-green-50 text-green-700"
-                : "border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white"
+                ? "border-green-400 bg-green-900/30 text-green-400"
+                : "border-white text-white hover:bg-white hover:text-gray-900"
             }`}
           >
             {copied ? "✓" : "🔗"} {copied ? t.shareCopied : t.shareCopyLink}

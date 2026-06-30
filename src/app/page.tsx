@@ -7,6 +7,7 @@ import ShelterFormShort from "@/components/ShelterFormShort";
 import Progress from "@/components/Progress";
 import Mission from "@/components/Mission";
 import Transparency from "@/components/Transparency";
+import Gallery from "@/components/Gallery";
 import Share from "@/components/Share";
 import Footer from "@/components/Footer";
 
@@ -25,6 +26,7 @@ export default function Home() {
         <Mission />
         <FlagStripe />
         <Transparency />
+        <Gallery />
         <Share />
       </main>
       <Footer />

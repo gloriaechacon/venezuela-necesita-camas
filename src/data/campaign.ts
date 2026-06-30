@@ -169,7 +169,8 @@ export const campaign = {
       navTeam: "Equipo",
 
       // Hero
-      heroTitle: "Un suelo frío no es lugar para reconstruir una vida.",
+      heroTitle: "Venezuela Necesita Camas",
+      heroH2: "Un suelo frío no es lugar para reconstruir una vida.",
       heroSubtitle: "El terremoto dejó a cientos de familias en Venezuela durmiendo en el piso de refugios y espacios improvisados. Hemos transformado un galpón familiar en un taller de esperanza: un equipo de herreros locales ya está fabricando literas de hierro y estamos articulando alianzas para conseguir colchones a precio de costo.",
       heroBadge: "Emergencia — Terremoto Venezuela",
       heroCampaignGoal: "Meta de la campaña",
@@ -190,7 +191,7 @@ export const campaign = {
       waDonationConfirm: "Hola, ya realicé mi donación para Venezuela Necesita Camas. Adjunto comprobante.",
       waShortFormMsg: "Hola, soy de *{refugio}* ({ubicacion}). Necesitamos {camas} camas. Mi WhatsApp: {whatsapp}. Solicitud enviada desde Venezuela Necesita Camas.",
       waFullFormMsg: "Hola, soy de *{refugio}* ubicado en *{ubicacion}*.\nPersona de contacto: {contacto}\nWhatsApp: {whatsapp}\nCantidad de personas: {personas}\nCamas necesarias: {camas}\nObservaciones: {observaciones}\n\nSolicito camas para Venezuela Necesita Camas.",
-      waPaymentRequest: "Hola, quiero solicitar los datos de {method}.",
+      waPaymentRequest: "Hola, quiero ayudar donando para una cama. ¿Me pasan los datos de {method} para hacer mi aporte?",
 
       // Process
       processTitle: "¿Cómo funciona?",
@@ -291,7 +292,7 @@ export const campaign = {
 
       // Share
       shareTitle: "Comparte esta campaña",
-      shareMsg: "🛏️ Venezuela necesita camas. Ayuda a fabricar literas y conseguir colchones para familias afectadas por el terremoto. Cada donación cuenta:",
+      shareMsg: "Venezuela necesita camas. Ayuda a fabricar literas y conseguir colchones para familias afectadas por el terremoto. Cada donación cuenta:",
       shareCopied: "¡Enlace copiado!",
       shareSubtitle: "Cada vez que compartes, la campaña llega a más venezolanos y extranjeros que pueden ayudar.",
       shareCopyLink: "Copiar enlace",
@@ -392,7 +393,8 @@ export const campaign = {
       navTeam: "Team",
 
       // Hero
-      heroTitle: "A cold floor is no place to rebuild a life.",
+      heroTitle: "Venezuela Needs Beds",
+      heroH2: "A cold floor is no place to rebuild a life.",
       heroSubtitle: "The earthquake left hundreds of families in Venezuela sleeping on shelter floors and improvised spaces. We have transformed a family workshop into a workshop of hope: a team of local ironworkers is already manufacturing iron bunk beds and we are building alliances to source mattresses at cost price.",
       heroBadge: "Emergency — Venezuela Earthquake",
       heroCampaignGoal: "Campaign goal",
@@ -413,7 +415,7 @@ export const campaign = {
       waDonationConfirm: "Hello, I have made my donation for Venezuela Needs Beds. I am attaching proof.",
       waShortFormMsg: "Hello, I am from *{refugio}* ({ubicacion}). We need {camas} beds. My WhatsApp: {whatsapp}. Request submitted from Venezuela Needs Beds.",
       waFullFormMsg: "Hello, I am from *{refugio}* located in *{ubicacion}*.\nContact person: {contacto}\nWhatsApp: {whatsapp}\nNumber of people: {personas}\nBeds needed: {camas}\nNotes: {observaciones}\n\nI am requesting beds from Venezuela Needs Beds.",
-      waPaymentRequest: "Hello, I would like to request the payment details for {method}.",
+      waPaymentRequest: "Hi, I'd like to help by donating for a bed. Could you send me the details for {method} to make my contribution?",
 
       // Process
       processTitle: "How does it work?",
