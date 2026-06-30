@@ -3,7 +3,13 @@
     "allow": [
       "Bash(npm install *)",
       "Bash(Get-Content \"C:\\\\Users\\\\Abraham\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--Users-Abraham-Documents-Gloria-Venezuela-pagina\\\\4c60b3b2-4861-43cb-bf9b-1efa0ade21a4\\\\tasks\\\\bcni27zs6.output\" -Wait -Tail 5)",
-      "Bash(Select-String -Pattern \"added|error|warn|npm warn\" --AllMatches)"
+      "Bash(Select-String -Pattern \"added|error|warn|npm warn\" --AllMatches)",
+      "Bash(npx tsc *)",
+      "Bash(npm run *)",
+      "Bash(curl *)",
+      "Bash(node *)",
+      "Bash(Start-Sleep -Seconds 30)",
+      "Bash(Get-Content \"C:\\\\Users\\\\Abraham\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--Users-Abraham-Documents-Gloria-Venezuela-pagina\\\\c7bc84d9-b5c0-4ee2-9743-08b0c26858f8\\\\tasks\\\\bwvcjpv05.output\" -Tail 40)"
     ]
   }
 }

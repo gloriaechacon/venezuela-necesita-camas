@@ -1,6 +1,21 @@
 import type { Metadata } from "next";
+import localFont from "next/font/local";
 import "./globals.css";
 import { LanguageProvider } from "@/context/LanguageContext";
+
+const bricolage = localFont({
+  src: "../fonts/BricolageGrotesque.woff2",
+  variable: "--font-bricolage",
+  weight: "400 800",
+  display: "swap",
+});
+
+const inter = localFont({
+  src: "../fonts/Inter.woff2",
+  variable: "--font-inter",
+  weight: "400 800",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Venezuela Necesita Camas | Campaña de Ayuda Humanitaria",
@@ -39,15 +54,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html lang="es" className={`${bricolage.variable} ${inter.variable}`}>
       <body>
         <LanguageProvider>{children}</LanguageProvider>
       </body>

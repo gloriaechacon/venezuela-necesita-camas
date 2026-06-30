@@ -1,13 +1,18 @@
+"use client";
+import { useLang } from "@/context/LanguageContext";
 import { campaign } from "@/data/campaign";
 
 export default function Partners() {
+  const { lang } = useLang();
+  const t = campaign.i18n[lang];
+
   return (
     <section id="aliados" className="py-16 bg-brand-gray">
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-10">
-          <h2 className="section-title">Empresas y organizaciones aliadas</h2>
+          <h2 className="section-title">{t.partnersTitle}</h2>
           <p className="section-subtitle max-w-xl mx-auto">
-            Gracias a quienes hacen posible esta campaña.
+            {t.partnersSubtitle}
           </p>
         </div>
 
@@ -32,14 +37,12 @@ export default function Partners() {
 
         <div className="text-center mt-8">
           <a
-            href={`https://wa.me/${campaign.contact.whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent(
-              "Hola, represento una empresa y quiero apoyar la campaña Venezuela Necesita Camas."
-            )}`}
+            href={`https://wa.me/${campaign.contact.whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent(t.waCompany)}`}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-whatsapp inline-flex"
           >
-            📲 Mi empresa quiere ser aliada
+            {t.partnersCta}
           </a>
         </div>
       </div>

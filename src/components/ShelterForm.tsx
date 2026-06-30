@@ -1,8 +1,12 @@
 "use client";
 import { useState } from "react";
+import { useLang } from "@/context/LanguageContext";
 import { campaign } from "@/data/campaign";
 
 export default function ShelterForm() {
+  const { lang } = useLang();
+  const t = campaign.i18n[lang];
+
   const [form, setForm] = useState({
     refugio: "",
     ubicacion: "",
@@ -19,20 +23,17 @@ export default function ShelterForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const msg = `Hola, soy de *${form.refugio}* ubicado en *${form.ubicacion}*.
-Persona de contacto: ${form.contacto}
-WhatsApp: ${form.whatsapp}
-Cantidad de personas: ${form.personas}
-Camas necesarias: ${form.camas}
-Observaciones: ${form.observaciones}
-
-Solicito camas para Venezuela Necesita Camas.`;
+    const msg = t.waFullFormMsg
+      .replace("{refugio}", form.refugio)
+      .replace("{ubicacion}", form.ubicacion)
+      .replace("{contacto}", form.contacto)
+      .replace("{whatsapp}", form.whatsapp)
+      .replace("{personas}", form.personas)
+      .replace("{camas}", form.camas)
+      .replace("{observaciones}", form.observaciones);
     const url = `https://wa.me/${campaign.contact.whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent(msg)}`;
     window.open(url, "_blank");
   };
-
-  // Future: para conectar Formspree, reemplazar handleSubmit con:
-  // fetch("https://formspree.io/f/YOUR_ID", { method: "POST", body: JSON.stringify(form), headers: { "Content-Type": "application/json" } })
 
   const inputClass =
     "w-full border border-brand-gray-mid rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:border-brand-blue focus:ring-2 focus:ring-blue-100 transition-all text-base";
@@ -41,9 +42,9 @@ Solicito camas para Venezuela Necesita Camas.`;
     <section id="refugios" className="py-16 bg-brand-gray">
       <div className="max-w-2xl mx-auto px-4">
         <div className="text-center mb-10">
-          <h2 className="section-title">Soy refugio y necesito camas</h2>
+          <h2 className="section-title">{t.shelterFormTitle}</h2>
           <p className="section-subtitle">
-            Completa el formulario y nos pondremos en contacto contigo para coordinar la entrega.
+            {t.shelterFormSubtitle}
           </p>
         </div>
 
@@ -51,27 +52,27 @@ Solicito camas para Venezuela Necesita Camas.`;
           <div className="grid sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-1">
-                Nombre del refugio *
+                {t.shelterFormLabelName}
               </label>
               <input
                 name="refugio"
                 required
                 value={form.refugio}
                 onChange={handleChange}
-                placeholder="Ej: Refugio Esperanza"
+                placeholder={t.shelterFormPlaceholderName}
                 className={inputClass}
               />
             </div>
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-1">
-                Ubicación *
+                {t.shelterFormLabelLocation}
               </label>
               <input
                 name="ubicacion"
                 required
                 value={form.ubicacion}
                 onChange={handleChange}
-                placeholder="Ej: La Guaira, Vargas"
+                placeholder={t.shelterFormPlaceholderLocation}
                 className={inputClass}
               />
             </div>
@@ -80,20 +81,20 @@ Solicito camas para Venezuela Necesita Camas.`;
           <div className="grid sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-1">
-                Persona de contacto *
+                {t.shelterFormLabelContact}
               </label>
               <input
                 name="contacto"
                 required
                 value={form.contacto}
                 onChange={handleChange}
-                placeholder="Tu nombre completo"
+                placeholder={t.shelterFormPlaceholderContact}
                 className={inputClass}
               />
             </div>
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-1">
-                WhatsApp *
+                {t.shelterFormLabelWA}
               </label>
               <input
                 name="whatsapp"
@@ -110,7 +111,7 @@ Solicito camas para Venezuela Necesita Camas.`;
           <div className="grid sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-1">
-                Cantidad de personas en el refugio *
+                {t.shelterFormLabelPeople}
               </label>
               <input
                 name="personas"
@@ -119,13 +120,13 @@ Solicito camas para Venezuela Necesita Camas.`;
                 min="1"
                 value={form.personas}
                 onChange={handleChange}
-                placeholder="Ej: 45"
+                placeholder={t.shelterFormPlaceholderPeople}
                 className={inputClass}
               />
             </div>
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-1">
-                Camas necesarias *
+                {t.shelterFormLabelBeds}
               </label>
               <input
                 name="camas"
@@ -134,7 +135,7 @@ Solicito camas para Venezuela Necesita Camas.`;
                 min="1"
                 value={form.camas}
                 onChange={handleChange}
-                placeholder="Ej: 10"
+                placeholder={t.shelterFormPlaceholderBeds}
                 className={inputClass}
               />
             </div>
@@ -142,14 +143,14 @@ Solicito camas para Venezuela Necesita Camas.`;
 
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1">
-              Observaciones
+              {t.shelterFormLabelNotes}
             </label>
             <textarea
               name="observaciones"
               rows={3}
               value={form.observaciones}
               onChange={handleChange}
-              placeholder="Condiciones del refugio, acceso, urgencias, etc."
+              placeholder={t.shelterFormPlaceholderNotes}
               className={`${inputClass} resize-none`}
             />
           </div>
@@ -158,11 +159,11 @@ Solicito camas para Venezuela Necesita Camas.`;
             type="submit"
             className="btn-whatsapp w-full justify-center text-base py-4"
           >
-            📲 Enviar solicitud por WhatsApp
+            {t.shelterFormSubmit}
           </button>
 
           <p className="text-xs text-gray-400 text-center">
-            Al enviar, se abrirá WhatsApp con tu solicitud prellenada. No guardamos tus datos.
+            {t.shelterFormDisclaimer}
           </p>
         </form>
       </div>

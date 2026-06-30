@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Process from "@/components/Process";
+import FlagStripe from "@/components/FlagStripe";
 import HowToHelp from "@/components/HowToHelp";
 import ShelterFormShort from "@/components/ShelterFormShort";
 import Progress from "@/components/Progress";
@@ -16,10 +17,13 @@ export default function Home() {
       <main>
         <Hero />
         <Process />
+        <FlagStripe />
         <HowToHelp />
         <ShelterFormShort />
+        <FlagStripe />
         <Progress />
         <Mission />
+        <FlagStripe />
         <Transparency />
         <Share />
       </main>

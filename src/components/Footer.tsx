@@ -1,5 +1,9 @@
+"use client";
+import { useState } from "react";
+import { useLang } from "@/context/LanguageContext";
 import { campaign } from "@/data/campaign";
 import type { GalleryCategory } from "@/data/campaign";
+import Lightbox from "./Lightbox";
 
 const galleryIcons: Record<GalleryCategory, string> = {
   produccion: "🔧",
@@ -18,24 +22,46 @@ const galleryBg: Record<GalleryCategory, string> = {
 };
 
 export default function Footer() {
+  const { lang } = useLang();
+  const t = campaign.i18n[lang];
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
   const waMain = `https://wa.me/${campaign.contact.whatsapp.replace(/\D/g, "")}`;
   const hasPhotos = campaign.gallery.some((g) => g.src);
   const hasPartners = campaign.partners.some((p) => p.logo || p.name !== "Por confirmar");
 
+  const realImages = campaign.gallery
+    .filter((g) => !!g.src)
+    .map((g) => ({
+      src: g.src!,
+      alt: lang === "en" && g.altEn ? g.altEn : g.alt,
+    }));
+
+  const footerLinks: [string, string][] = [
+    ["/#proceso",       t.footerLink1],
+    ["/#como-ayudar",   t.footerLink2],
+    ["/#pedir-cama",    t.footerLink3],
+    ["/#progreso",      t.footerLink4],
+    ["/#mision",        t.footerLink5],
+    ["/#transparencia", t.footerLink6],
+    ["/equipo",         t.footerLink7],
+    ["/refugios",       t.footerLink8],
+  ];
+
   return (
-    <footer className="bg-brand-blue-dark text-white">
-      {/* ── Empresas aliadas (simplificado) ── */}
+    <footer className="bg-gray-950 text-white">
+      {/* ── Empresas aliadas ── */}
       {hasPartners && (
         <div className="border-b border-white/10 py-8">
           <div className="max-w-6xl mx-auto px-4">
-            <p className="text-xs font-semibold text-blue-400 uppercase tracking-widest text-center mb-5">
-              Empresas y organizaciones aliadas
+            <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest text-center mb-5">
+              {t.footerPartnersLabel}
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               {campaign.partners.map((p, i) => (
                 <div
                   key={i}
-                  className="bg-white/8 border border-white/10 rounded-xl px-5 py-3 flex items-center gap-2 text-sm text-blue-200"
+                  className="bg-white/5 border border-white/10 rounded-xl px-5 py-3 flex items-center gap-2 text-sm text-gray-400"
                 >
                   {p.logo ? (
                     // eslint-disable-next-line @next/next/no-img-element
@@ -51,39 +77,59 @@ export default function Footer() {
         </div>
       )}
 
-      {/* ── Galería de avances (simplificada) ── */}
+      {/* ── Galería de avances ── */}
       <div className="border-b border-white/10 py-8">
         <div className="max-w-6xl mx-auto px-4">
-          <p className="text-xs font-semibold text-blue-400 uppercase tracking-widest text-center mb-5">
-            Galería de avances
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest text-center mb-5">
+            {t.footerGalleryLabel}
           </p>
           <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
-            {campaign.gallery.map((item, i) => (
-              <div
-                key={i}
-                className={`aspect-square rounded-xl flex flex-col items-center justify-center ${galleryBg[item.category]} border border-white/10`}
-              >
-                {item.src ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={item.src}
-                    alt={item.alt}
-                    className="w-full h-full object-cover rounded-xl"
-                  />
-                ) : (
-                  <>
-                    <span className="text-2xl">{galleryIcons[item.category]}</span>
-                    <span className="text-[9px] text-blue-300 mt-1 text-center px-1 leading-tight">
-                      {item.alt}
-                    </span>
-                  </>
-                )}
-              </div>
-            ))}
+            {campaign.gallery.map((item, i) => {
+              if (item.src) {
+                const realIdx = realImages.findIndex((r) => r.src === item.src);
+                const alt = lang === "en" && item.altEn ? item.altEn : item.alt;
+                return (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={() => setLightboxIndex(realIdx)}
+                    className={`aspect-square rounded-xl overflow-hidden border border-white/10 relative group cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-yellow`}
+                    aria-label={alt}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={item.src}
+                      alt={alt}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end justify-center pb-1.5 px-1">
+                      <span className="text-[9px] text-white text-center leading-tight font-medium drop-shadow">
+                        {alt}
+                      </span>
+                    </div>
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                      <span className="text-white text-2xl drop-shadow">🔍</span>
+                    </div>
+                  </button>
+                );
+              }
+
+              return (
+                <div
+                  key={i}
+                  className={`aspect-square rounded-xl flex flex-col items-center justify-center ${galleryBg[item.category]} border border-white/10`}
+                >
+                  <span className="text-2xl">{galleryIcons[item.category]}</span>
+                  <span className="text-[9px] text-gray-500 mt-1 text-center px-1 leading-tight">
+                    {lang === "en" && item.altEn ? item.altEn : item.alt}
+                  </span>
+                </div>
+              );
+            })}
           </div>
           {!hasPhotos && (
-            <p className="text-center text-xs text-blue-400 mt-3">
-              Las fotos propias de producción y entregas se publicarán aquí.
+            <p className="text-center text-xs text-gray-600 mt-3">
+              {t.footerGalleryPending}
             </p>
           )}
         </div>
@@ -95,22 +141,22 @@ export default function Footer() {
           <div className="grid md:grid-cols-3 gap-8 mb-8">
             {/* Campaign */}
             <div>
-              <div className="text-xl font-bold mb-2">🛏️ Venezuela Necesita Camas</div>
-              <p className="text-blue-200 text-sm leading-relaxed">{campaign.texts.footerTagline}</p>
-              <div className="mt-4 text-sm text-blue-300">
+              <div className="text-xl font-bold mb-2 font-heading">🛏️ Venezuela Necesita Camas</div>
+              <p className="text-gray-400 text-sm leading-relaxed">{t.footerTagline}</p>
+              <div className="mt-4 text-sm text-gray-500">
                 📍 {campaign.workshop.location}
               </div>
             </div>
 
             {/* Contact */}
             <div>
-              <div className="font-semibold mb-3 text-blue-100">Contacto</div>
+              <div className="font-semibold mb-3 text-gray-300">{t.footerContactLabel}</div>
               <div className="space-y-2 text-sm">
                 <a
                   href={waMain}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-blue-200 hover:text-white transition-colors"
+                  className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
                 >
                   📱 {campaign.contact.whatsappDisplay}
                 </a>
@@ -119,7 +165,7 @@ export default function Footer() {
                     href={`https://wa.me/${campaign.contact.whatsappSecondary.replace(/\D/g, "")}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-blue-200 hover:text-white transition-colors"
+                    className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
                   >
                     📱 {campaign.contact.whatsappSecondaryDisplay}
                   </a>
@@ -127,13 +173,13 @@ export default function Footer() {
                 {campaign.contact.email && (
                   <a
                     href={`mailto:${campaign.contact.email}`}
-                    className="flex items-center gap-2 text-blue-200 hover:text-white transition-colors"
+                    className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
                   >
                     ✉️ {campaign.contact.email}
                   </a>
                 )}
                 {campaign.contact.instagram && (
-                  <span className="flex items-center gap-2 text-blue-200">
+                  <span className="flex items-center gap-2 text-gray-400">
                     📸 {campaign.contact.instagram}
                   </span>
                 )}
@@ -142,22 +188,13 @@ export default function Footer() {
 
             {/* Links */}
             <div>
-              <div className="font-semibold mb-3 text-blue-100">Secciones</div>
+              <div className="font-semibold mb-3 text-gray-300">{t.footerSectionsLabel}</div>
               <div className="grid grid-cols-2 gap-1 text-sm">
-                {[
-                  ["/#proceso", "Cómo funciona"],
-                  ["/#como-ayudar", "Cómo ayudar"],
-                  ["/#pedir-cama", "Pedir una cama"],
-                  ["/#progreso", "Avance"],
-                  ["/#mision", "Nuestra misión"],
-                  ["/#transparencia", "Transparencia"],
-                  ["/equipo", "Quiénes somos"],
-                  ["/refugios", "Formulario refugios"],
-                ].map(([href, label]) => (
+                {footerLinks.map(([href, label]) => (
                   <a
                     key={href}
                     href={href}
-                    className="text-blue-300 hover:text-white transition-colors py-0.5"
+                    className="text-gray-500 hover:text-white transition-colors py-0.5"
                   >
                     {label}
                   </a>
@@ -166,16 +203,32 @@ export default function Footer() {
             </div>
           </div>
 
+          {/* Flag accent stripe */}
+          <div className="flex gap-0 w-12 mb-6 rounded-full overflow-hidden h-[2px]">
+            <div className="flex-1 bg-brand-yellow" />
+            <div className="flex-1 bg-blue-500" />
+            <div className="flex-1 bg-brand-red" />
+          </div>
+
           <div className="border-t border-white/10 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-blue-300 text-xs text-center md:text-left">
-              © 2026 Venezuela Necesita Camas. Campaña de ayuda humanitaria ciudadana.
+            <p className="text-gray-600 text-xs text-center md:text-left">
+              {t.footerCopyright}
             </p>
-            <p className="text-blue-400 text-xs">
-              Todos los fondos se destinan directamente a materiales, fabricación y logística.
+            <p className="text-gray-700 text-xs">
+              {t.footerFundsNote}
             </p>
           </div>
         </div>
       </div>
+
+      {lightboxIndex !== null && (
+        <Lightbox
+          images={realImages}
+          index={lightboxIndex}
+          onClose={() => setLightboxIndex(null)}
+          onNavigate={setLightboxIndex}
+        />
+      )}
     </footer>
   );
 }

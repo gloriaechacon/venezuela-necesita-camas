@@ -1,16 +1,8 @@
 "use client";
 import { useState } from "react";
+import { useLang } from "@/context/LanguageContext";
 import type { GalleryCategory } from "@/data/campaign";
 import { campaign } from "@/data/campaign";
-
-const categoryLabels: Record<GalleryCategory | "todas", string> = {
-  todas: "Todas",
-  produccion: "Producción",
-  materiales: "Materiales",
-  colchones: "Colchones",
-  entregas: "Entregas",
-  refugios: "Refugios",
-};
 
 const categoryIcons: Record<GalleryCategory | "todas", string> = {
   todas: "📷",
@@ -30,8 +22,20 @@ const placeholderBg: Record<GalleryCategory, string> = {
 };
 
 export default function Gallery() {
+  const { lang } = useLang();
+  const t = campaign.i18n[lang];
   const [filter, setFilter] = useState<GalleryCategory | "todas">("todas");
+
   const categories: (GalleryCategory | "todas")[] = ["todas", "produccion", "materiales", "colchones", "entregas", "refugios"];
+
+  const categoryLabels: Record<GalleryCategory | "todas", string> = {
+    todas: t.galleryCatAll,
+    produccion: t.galleryCatProduccion,
+    materiales: t.galleryCatMateriales,
+    colchones: t.galleryCatColchones,
+    entregas: t.galleryCatEntregas,
+    refugios: t.galleryCatRefugios,
+  };
 
   const filtered = filter === "todas"
     ? campaign.gallery
@@ -41,9 +45,9 @@ export default function Gallery() {
     <section id="galeria" className="py-16 bg-white">
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-10">
-          <h2 className="section-title">Galería de avances</h2>
+          <h2 className="section-title">{t.galleryTitle}</h2>
           <p className="section-subtitle max-w-xl mx-auto">
-            Seguimiento visual de la campaña. Las fotos propias se irán publicando aquí.
+            {t.gallerySubtitle}
           </p>
         </div>
 
@@ -78,14 +82,16 @@ export default function Gallery() {
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={item.src}
-                  alt={item.alt}
+                  alt={lang === "en" && item.altEn ? item.altEn : item.alt}
                   className="w-full h-full object-cover"
                 />
               ) : (
                 <div className="text-center p-4">
                   <div className="text-4xl mb-2">{categoryIcons[item.category]}</div>
-                  <p className="text-xs text-gray-400 font-medium">{item.alt}</p>
-                  <p className="text-xs text-gray-300 mt-1">Foto próximamente</p>
+                  <p className="text-xs text-gray-400 font-medium">
+                    {lang === "en" && item.altEn ? item.altEn : item.alt}
+                  </p>
+                  <p className="text-xs text-gray-300 mt-1">{t.galleryPhotoSoon}</p>
                 </div>
               )}
             </div>
@@ -93,7 +99,7 @@ export default function Gallery() {
         </div>
 
         <p className="text-center text-sm text-gray-400 mt-6">
-          Las fotos propias de producción y entregas se irán publicando aquí en tiempo real.
+          {t.galleryFootnote}
         </p>
       </div>
     </section>

@@ -1,72 +1,54 @@
+"use client";
+import { useLang } from "@/context/LanguageContext";
 import { campaign } from "@/data/campaign";
 
 export default function Team() {
-  const colors = [
-    "bg-blue-100 text-brand-blue",
-    "bg-yellow-100 text-yellow-700",
-    "bg-green-100 text-green-700",
-    "bg-purple-100 text-purple-700",
-    "bg-rose-100 text-rose-700",
-  ];
+  const { lang } = useLang();
+  const t = campaign.i18n[lang];
 
   return (
     <section id="quienes-somos" className="py-16 bg-white">
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="section-title">Quiénes somos</h2>
+      <div className="max-w-4xl mx-auto px-4">
+        <div className="text-center mb-10">
+          <h2 className="section-title">{t.teamTitle}</h2>
           <p className="section-subtitle max-w-xl mx-auto">
-            Un equipo de venezolanos comprometidos con la respuesta inmediata al terremoto.
+            {t.teamSubtitle}
           </p>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-          {campaign.team.map((m, i) => (
-            <div key={m.name} className="card text-center hover:shadow-md transition-shadow">
-              <div
-                className={`w-14 h-14 rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-3 ${
-                  colors[i % colors.length]
-                }`}
-              >
-                {m.initials}
+        {/* Lista de personas — texto simple, sin protagonismo visual */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-8 gap-y-1 max-w-2xl mx-auto mb-8">
+          {campaign.team.map((m) => (
+            <div key={m.name} className="py-2.5 border-b border-gray-100">
+              <div className="text-sm font-medium text-gray-800 leading-snug">{m.name}</div>
+              <div className="text-xs text-gray-400 mt-0.5">
+                {lang === "en" && m.roleEn ? m.roleEn : m.role}
               </div>
-              <div className="font-semibold text-brand-blue text-sm leading-tight">{m.name}</div>
-              <div className="text-gray-500 text-xs mt-1">{m.role}</div>
             </div>
           ))}
 
-          {/* Placeholder: Herreros por confirmar */}
+          {/* Herreros */}
           {campaign.progress.ironworkersConfirmed > 0 && (
-            <div className="card text-center opacity-60 border-dashed">
-              <div className="w-14 h-14 rounded-full bg-gray-100 flex items-center justify-center text-2xl mx-auto mb-3">
-                🔧
+            <div className="py-2.5 border-b border-gray-100">
+              <div className="text-sm font-medium text-gray-800 leading-snug">
+                🔧 {t.teamIronworkersLabel}
               </div>
-              <div className="font-semibold text-gray-500 text-sm">Herreros</div>
-              <div className="text-gray-400 text-xs mt-1">
-                {campaign.progress.ironworkersConfirmed} confirmados
+              <div className="text-xs text-gray-400 mt-0.5">
+                {campaign.progress.ironworkersConfirmed} {t.teamIronworkersConfirmedLabel}
               </div>
-            </div>
-          )}
-
-          {campaign.workshop.name && (
-            <div className="card text-center opacity-80">
-              <div className="w-14 h-14 rounded-full bg-orange-100 flex items-center justify-center text-2xl mx-auto mb-3">
-                🏭
-              </div>
-              <div className="font-semibold text-brand-blue text-sm">{campaign.workshop.name}</div>
-              <div className="text-gray-500 text-xs mt-1">{campaign.workshop.location}</div>
-            </div>
-          )}
-
-          {campaign.mattressCompany.name && (
-            <div className="card text-center opacity-80">
-              <div className="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center text-2xl mx-auto mb-3">
-                🪑
-              </div>
-              <div className="font-semibold text-brand-blue text-sm">{campaign.mattressCompany.name}</div>
-              <div className="text-gray-500 text-xs mt-1">Proveedor de colchones</div>
             </div>
           )}
         </div>
+
+        {/* Taller de producción */}
+        {campaign.workshop.name && (
+          <div className="max-w-2xl mx-auto border-t border-gray-100 pt-6 text-center">
+            <div className="text-xs text-gray-400 uppercase tracking-widest mb-1">
+              {lang === "en" ? "Production workshop" : "Taller de producción"}
+            </div>
+            <div className="text-sm font-medium text-gray-700">{campaign.workshop.location}</div>
+          </div>
+        )}
       </div>
     </section>
   );

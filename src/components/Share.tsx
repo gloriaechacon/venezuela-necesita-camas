@@ -18,12 +18,12 @@ export default function Share() {
   };
 
   return (
-    <section id="compartir" className="py-16 bg-brand-yellow-light">
+    <section id="compartir" className="py-16 bg-white border-t border-gray-100">
       <div className="max-w-xl mx-auto px-4 text-center">
         <div className="text-4xl mb-4">📣</div>
         <h2 className="section-title">{t.shareTitle}</h2>
-        <p className="text-gray-600 mb-8">
-          Cada vez que compartes, la campaña llega a más venezolanos y extranjeros que pueden ayudar.
+        <p className="text-gray-500 mb-8">
+          {t.shareSubtitle}
         </p>
 
         <div className="flex flex-wrap gap-3 justify-center">
@@ -58,7 +58,7 @@ export default function Share() {
             href={`https://twitter.com/intent/tweet?text=${msg}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-3 bg-black text-white font-semibold rounded-lg hover:bg-gray-800 transition-colors"
+            className="inline-flex items-center gap-2 px-5 py-3 bg-gray-900 text-white font-semibold rounded-lg hover:bg-black transition-colors"
           >
             <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
               <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
@@ -85,10 +85,10 @@ export default function Share() {
             className={`inline-flex items-center gap-2 px-5 py-3 border-2 font-semibold rounded-lg transition-all ${
               copied
                 ? "border-green-500 bg-green-50 text-green-700"
-                : "border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-white"
+                : "border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white"
             }`}
           >
-            {copied ? "✓" : "🔗"} {copied ? t.shareCopied : "Copiar enlace"}
+            {copied ? "✓" : "🔗"} {copied ? t.shareCopied : t.shareCopyLink}
           </button>
         </div>
       </div>

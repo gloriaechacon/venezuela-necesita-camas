@@ -1,15 +1,18 @@
 "use client";
 import { useState } from "react";
+import { useLang } from "@/context/LanguageContext";
 import { campaign } from "@/data/campaign";
 import PaymentModal from "./PaymentModal";
 
 export default function Sponsor() {
+  const { lang } = useLang();
+  const t = campaign.i18n[lang];
   const [showPayment, setShowPayment] = useState(false);
   const s = campaign.sponsorship;
 
-  const formatAmount = (bsf: number | null, usd: number | null, show: boolean, labelBsf: string, labelUsd: string) => {
+  const formatAmount = (bsf: number | null, usd: number | null, show: boolean) => {
     if (!show || (bsf === null && usd === null)) {
-      return { bsf: labelBsf, usd: labelUsd };
+      return { bsf: t.sponsorAmountTBD, usd: t.sponsorAmountTBD };
     }
     return {
       bsf: bsf !== null ? `Bs. ${bsf.toLocaleString("es-VE")}` : "—",
@@ -17,31 +20,34 @@ export default function Sponsor() {
     };
   };
 
-  const litera = formatAmount(s.litera.bsf, s.litera.usd, s.litera.showAmounts, s.litera.labelBsf, s.litera.labelUsd);
-  const colchon = formatAmount(s.colchon.bsf, s.colchon.usd, s.colchon.showAmounts, s.colchon.labelBsf, s.colchon.labelUsd);
+  const litera = formatAmount(s.litera.bsf, s.litera.usd, s.litera.showAmounts);
+  const colchon = formatAmount(s.colchon.bsf, s.colchon.usd, s.colchon.showAmounts);
+  const freeAmount = s.freeMin.usd !== null
+    ? t.sponsorFreeFromUSD.replace("${usd}", String(s.freeMin.usd))
+    : t.sponsorFreeAnyAmount;
 
   const options = [
     {
       icon: "🛏️",
-      title: "Apadrina una litera",
-      subtitle: "Cubre el costo de fabricación de 1 litera completa",
+      title: t.sponsorBunkBedTitle,
+      subtitle: t.sponsorBunkBedDesc,
       bsf: litera.bsf,
       usd: litera.usd,
       accent: true,
     },
     {
       icon: "🪑",
-      title: "Apadrina un colchón",
-      subtitle: "Cubre 1 colchón nuevo para una familia",
+      title: t.sponsorMattressTitle,
+      subtitle: t.sponsorMattressDesc,
       bsf: colchon.bsf,
       usd: colchon.usd,
       accent: false,
     },
     {
       icon: "💛",
-      title: "Dona libremente",
-      subtitle: "Cualquier aporte suma. Tú decides el monto.",
-      bsf: s.freeMin.usd !== null ? `Desde $${s.freeMin.usd} USD` : "Cualquier monto",
+      title: t.sponsorFreeDonateTitle,
+      subtitle: t.sponsorFreeDonateDesc,
+      bsf: freeAmount,
       usd: null,
       accent: false,
     },
@@ -51,9 +57,9 @@ export default function Sponsor() {
     <section id="apadrina" className="py-16 bg-brand-blue">
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-white mb-4">Apadrina una cama</h2>
+          <h2 className="text-3xl font-bold text-white mb-4">{t.sponsorTitle}</h2>
           <p className="text-blue-100 text-lg max-w-xl mx-auto">
-            Tu aporte tiene nombre y apellido: una familia que puede descansar dignamente.
+            {t.sponsorSubtitle}
           </p>
         </div>
 
@@ -90,7 +96,7 @@ export default function Sponsor() {
                     : "bg-brand-yellow text-brand-blue hover:bg-yellow-400"
                 }`}
               >
-                Donar ahora
+                {t.sponsorDonateBtn}
               </button>
             </div>
           ))}
