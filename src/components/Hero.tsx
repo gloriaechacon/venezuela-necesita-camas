@@ -9,7 +9,7 @@ export default function Hero() {
   const t = campaign.i18n[lang];
   const [showPayment, setShowPayment] = useState(false);
 
-  const waHelp = `https://wa.me/${campaign.contact.whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent(t.waVolunteer)}`;
+  const waHelp = `https://wa.me/${campaign.contact.whatsappSecondary!.replace(/\D/g, "")}?text=${encodeURIComponent(t.waVolunteer)}`;
 
   const flagBg = {
     background: `

@@ -37,7 +37,7 @@ export default function Partners() {
 
         <div className="text-center mt-8">
           <a
-            href={`https://wa.me/${campaign.contact.whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent(t.waCompany)}`}
+            href={`https://wa.me/${campaign.contact.whatsappSecondary!.replace(/\D/g, "")}?text=${encodeURIComponent(t.waCompany)}`}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-whatsapp inline-flex"

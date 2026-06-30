@@ -9,8 +9,10 @@ export default function HowToHelp() {
   const t = campaign.i18n[lang];
   const [showPayment, setShowPayment] = useState(false);
 
-  const wa = (msg: string) =>
+  const waMaterials = (msg: string) =>
     `https://wa.me/${campaign.contact.whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent(msg)}`;
+  const wa = (msg: string) =>
+    `https://wa.me/${campaign.contact.whatsappSecondary!.replace(/\D/g, "")}?text=${encodeURIComponent(msg)}`;
 
   const materials = lang === "en" ? campaign.materialsNeededEn : campaign.materialsNeeded;
 
@@ -46,7 +48,7 @@ export default function HowToHelp() {
       list: materials,
       action: (
         <a
-          href={wa(t.waMaterials)}
+          href={waMaterials(t.waMaterials)}
           target="_blank"
           rel="noopener noreferrer"
           className="btn-whatsapp w-full justify-center mt-4"

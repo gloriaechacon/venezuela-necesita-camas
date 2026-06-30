@@ -31,7 +31,7 @@ export default function ShelterForm() {
       .replace("{personas}", form.personas)
       .replace("{camas}", form.camas)
       .replace("{observaciones}", form.observaciones);
-    const url = `https://wa.me/${campaign.contact.whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent(msg)}`;
+    const url = `https://wa.me/${campaign.contact.whatsappSecondary!.replace(/\D/g, "")}?text=${encodeURIComponent(msg)}`;
     window.open(url, "_blank");
   };
 

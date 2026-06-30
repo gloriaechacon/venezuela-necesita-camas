@@ -16,7 +16,7 @@ const methods = [
 export default function PaymentModal({ onClose }: Props) {
   const { lang } = useLang();
   const t = campaign.i18n[lang];
-  const wa = campaign.contact.whatsapp.replace(/\D/g, "");
+  const wa = campaign.contact.whatsappSecondary!.replace(/\D/g, "");
 
   const waRequest = (label: string) =>
     `https://wa.me/${wa}?text=${encodeURIComponent(
