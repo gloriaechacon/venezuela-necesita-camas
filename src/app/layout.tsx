@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     siteName: "Venezuela Necesita Camas",
     images: [
       {
-        url: "/og-image.svg",
+        url: "/api/og",
         width: 1200,
         height: 630,
         alt: "Venezuela Necesita Camas - Campaña humanitaria",
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     title: "Venezuela Necesita Camas",
     description:
       "Campaña para fabricar y entregar literas y colchones a familias afectadas por el terremoto.",
-    images: ["/og-image.svg"],
+    images: ["/api/og"],
   },
   metadataBase: new URL("https://venezuelanecesitacamas.vercel.app"),
 };
